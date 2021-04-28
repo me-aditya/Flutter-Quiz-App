@@ -32,12 +32,18 @@ List<Icon> scoreKeeper = [];
 
 class _QuizAppState extends State<QuizApp> {
   List<String> questions = [
-    'College will reopen',
+    'Kota will reopen',
     'Today is Sunday',
     'Tom is hero',
   ];
 
-  int p = 0;
+  List<bool> answers = [
+    false,
+    false,
+    true,
+  ];
+
+  int queNumber = 0;
   int len = 3;
 
   @override
@@ -52,7 +58,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                questions[p % len],
+                questions[queNumber % len],
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -76,15 +82,28 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  p++;
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                });
+                bool correctAns = answers[queNumber % len];
+                if (correctAns == true) {
+                  setState(() {
+                    queNumber++;
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
+                    );
+                  });
+                } else {
+                  setState(() {
+                    queNumber++;
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                    );
+                  });
+                }
               },
             ),
           ),
@@ -102,15 +121,28 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  p++;
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                });
+                bool correctAns = answers[queNumber % len];
+                if (correctAns == false) {
+                  setState(() {
+                    queNumber++;
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
+                    );
+                  });
+                } else {
+                  setState(() {
+                    queNumber++;
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                    );
+                  });
+                }
               },
             ),
           ),
