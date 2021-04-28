@@ -28,7 +28,18 @@ class QuizApp extends StatefulWidget {
   _QuizAppState createState() => _QuizAppState();
 }
 
+List<Icon> scoreKeeper = [];
+
 class _QuizAppState extends State<QuizApp> {
+  List<String> questions = [
+    'College will reopen',
+    'Today is Sunday',
+    'Tom is hero',
+  ];
+
+  int p = 0;
+  int len = 3;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +52,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "This is where questions goes",
+                questions[p % len],
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -64,7 +75,17 @@ class _QuizAppState extends State<QuizApp> {
                   fontSize: 20.0,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  p++;
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                });
+              },
             ),
           ),
         ),
@@ -81,11 +102,22 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                setState(() {
+                  p++;
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
               },
             ),
           ),
         ),
+        Row(
+          children: scoreKeeper,
+        )
       ],
     );
   }
