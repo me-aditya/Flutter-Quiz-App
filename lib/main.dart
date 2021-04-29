@@ -1,6 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = new QuizBrain();
 
 void main() {
   runApp(Quizzler());
@@ -44,7 +46,7 @@ class _QuizAppState extends State<QuizApp> {
   ];
 
   int queNumber = 0;
-  int len = 3;
+  int len = 13;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                questions[queNumber % len],
+                quizBrain.getQuestionText(queNumber % len),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -82,7 +84,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = answers[queNumber % len];
+                bool correctAns = quizBrain.getQuestionAnswer(queNumber % len);
                 if (correctAns == true) {
                   setState(() {
                     queNumber++;
@@ -121,7 +123,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = answers[queNumber % len];
+                bool correctAns = quizBrain.getQuestionAnswer(queNumber % len);
                 if (correctAns == false) {
                   setState(() {
                     queNumber++;
