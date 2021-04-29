@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = new QuizBrain();
 
@@ -48,26 +49,38 @@ class _QuizAppState extends State<QuizApp> {
   void printAns(bool value) {
     bool correctAns = quizBrain.getQuestionAnswer();
     // Can also be done by writing if else inside setState function
-    if (correctAns == value) {
+    if (quizBrain.quizFinished() == true) {
       setState(() {
-        quizBrain.incrQuestion();
-        scoreKeeper.add(
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
+        quizBrain.reset();
+        Alert(
+          context: context,
+          title: "Quiz Finished",
+          desc: "Thanks for taking the challenge",
+        ).show();
+        scoreKeeper = [];
       });
     } else {
-      setState(() {
-        quizBrain.incrQuestion();
-        scoreKeeper.add(
-          Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-        );
-      });
+      if (correctAns == value) {
+        setState(() {
+          quizBrain.incrQuestion();
+          scoreKeeper.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        });
+      } else {
+        setState(() {
+          quizBrain.incrQuestion();
+          scoreKeeper.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        });
+      }
     }
   }
 
