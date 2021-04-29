@@ -45,9 +45,6 @@ class _QuizAppState extends State<QuizApp> {
     true,
   ];
 
-  int queNumber = 0;
-  int len = 13;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +57,7 @@ class _QuizAppState extends State<QuizApp> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                quizBrain.getQuestionText(queNumber % len),
+                quizBrain.getQuestionText(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
@@ -84,10 +81,10 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getQuestionAnswer(queNumber % len);
+                bool correctAns = quizBrain.getQuestionAnswer();
                 if (correctAns == true) {
                   setState(() {
-                    queNumber++;
+                    quizBrain.incrQuestion();
                     scoreKeeper.add(
                       Icon(
                         Icons.check,
@@ -97,7 +94,7 @@ class _QuizAppState extends State<QuizApp> {
                   });
                 } else {
                   setState(() {
-                    queNumber++;
+                    quizBrain.incrQuestion();
                     scoreKeeper.add(
                       Icon(
                         Icons.close,
@@ -123,10 +120,10 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getQuestionAnswer(queNumber % len);
+                bool correctAns = quizBrain.getQuestionAnswer();
                 if (correctAns == false) {
                   setState(() {
-                    queNumber++;
+                    quizBrain.incrQuestion();
                     scoreKeeper.add(
                       Icon(
                         Icons.check,
@@ -136,7 +133,7 @@ class _QuizAppState extends State<QuizApp> {
                   });
                 } else {
                   setState(() {
-                    queNumber++;
+                    quizBrain.incrQuestion();
                     scoreKeeper.add(
                       Icon(
                         Icons.close,
