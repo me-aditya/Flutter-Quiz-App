@@ -33,17 +33,43 @@ class QuizApp extends StatefulWidget {
 List<Icon> scoreKeeper = [];
 
 class _QuizAppState extends State<QuizApp> {
-  List<String> questions = [
-    'Kota will reopen',
-    'Today is Sunday',
-    'Tom is hero',
-  ];
+  // List<String> questions = [
+  //   'Kota will reopen',
+  //   'Today is Sunday',
+  //   'Tom is hero',
+  // ];
 
-  List<bool> answers = [
-    false,
-    false,
-    true,
-  ];
+  // List<bool> answers = [
+  //   false,
+  //   false,
+  //   true,
+  // ];
+
+  void printAns(bool value) {
+    bool correctAns = quizBrain.getQuestionAnswer();
+    // Can also be done by writing if else inside setState function
+    if (correctAns == value) {
+      setState(() {
+        quizBrain.incrQuestion();
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      });
+    } else {
+      setState(() {
+        quizBrain.incrQuestion();
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,28 +107,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getQuestionAnswer();
-                if (correctAns == true) {
-                  setState(() {
-                    quizBrain.incrQuestion();
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  });
-                } else {
-                  setState(() {
-                    quizBrain.incrQuestion();
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                    );
-                  });
-                }
+                printAns(true);
               },
             ),
           ),
@@ -120,28 +125,7 @@ class _QuizAppState extends State<QuizApp> {
                 ),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getQuestionAnswer();
-                if (correctAns == false) {
-                  setState(() {
-                    quizBrain.incrQuestion();
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  });
-                } else {
-                  setState(() {
-                    quizBrain.incrQuestion();
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                    );
-                  });
-                }
+                printAns(false);
               },
             ),
           ),
